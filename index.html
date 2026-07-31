@@ -1,1 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Proyectos de Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:  #120C29;
+    --bg-mid:   #1C1245;
+    --panel:    rgba(255,255,255,0.055);
+    --panel-border: rgba(255,255,255,0.10);
+    --text:     #F6F4FF;
+    --text-muted: #A79FC9;
+    --violet: #8B5CF6;
+    --pink:   #FF6EC7;
+    --teal:   #2DD4BF;
+    --amber:  #FFB347;
+    --radius: 18px;
+  }
 
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(60% 50% at 85% -5%, rgba(139,92,246,0.35), transparent 60%),
+      radial-gradient(50% 40% at 8% 12%, rgba(255,110,199,0.22), transparent 60%),
+      radial-gradient(45% 45% at 20% 95%, rgba(45,212,191,0.18), transparent 60%),
+      linear-gradient(180deg, var(--bg-deep), var(--bg-mid) 55%, var(--bg-deep));
+    background-attachment: fixed;
+    color: var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.55;
+  }
+
+  ::selection{ background: var(--violet); color:#fff; }
+  a{ color:inherit; }
+
+  .wrap{ max-width: 1080px; margin:0 auto; padding: 0 24px; }
+
+  /* ---------------- NAV ---------------- */
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding: 26px 0;
+  }
+  .brand{
+    font-family:'Sora', sans-serif; font-weight:800; font-size:18px;
+    display:flex; align-items:center; gap:9px;
+  }
+  .brand .brand-dot{
+    width:11px; height:11px; border-radius:4px;
+    background: linear-gradient(135deg, var(--violet), var(--pink));
+    display:inline-block;
+  }
+  nav .links{ display:flex; gap:28px; font-size:14px; font-weight:500; color: var(--text-muted); }
+  nav .links a{ text-decoration:none; transition: color .15s; }
+  nav .links a:hover{ color: var(--text); }
+  nav .links a:focus-visible{ outline:2px solid var(--violet); outline-offset:4px; border-radius:4px; }
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 40px;
+    align-items:center;
+    padding: 48px 0 84px;
+  }
+  @media (max-width: 860px){
+    .hero{ grid-template-columns: 1fr; padding: 24px 0 56px; }
+    .hero-art{ order:-1; }
+  }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:12.5px; color: var(--teal);
+    background: rgba(45,212,191,0.10);
+    border:1px solid rgba(45,212,191,0.28);
+    padding: 6px 12px; border-radius:99px;
+    margin-bottom: 22px;
+  }
+  .eyebrow .pulse{
+    width:6px; height:6px; border-radius:50%; background: var(--teal);
+    box-shadow: 0 0 0 0 rgba(45,212,191,0.6);
+    animation: pulse 2s infinite;
+  }
+  @media (prefers-reduced-motion: reduce){ .eyebrow .pulse{ animation:none; } }
+  @keyframes pulse{
+    0%{ box-shadow: 0 0 0 0 rgba(45,212,191,0.55); }
+    70%{ box-shadow: 0 0 0 7px rgba(45,212,191,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(45,212,191,0); }
+  }
+
+  h1{
+    font-family:'Sora', sans-serif;
+    font-weight:800;
+    font-size: clamp(34px, 4.6vw, 54px);
+    line-height:1.08;
+    margin: 0 0 18px;
+    letter-spacing:-0.5px;
+  }
+  h1 .grad{
+    background: linear-gradient(100deg, var(--violet), var(--pink) 55%, var(--amber));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  p.lead{ color: var(--text-muted); font-size:17px; max-width:480px; margin:0 0 32px; }
+
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn{
+    font-family:'Inter', sans-serif; font-weight:600; font-size:14.5px;
+    padding: 13px 24px; border-radius: 12px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .btn:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; }
+  .btn.primary{
+    background: linear-gradient(120deg, var(--violet), var(--pink));
+    color:#fff;
+    box-shadow: 0 10px 30px -8px rgba(139,92,246,0.65);
+  }
+  .btn.primary:hover{ transform: translateY(-2px); box-shadow: 0 14px 36px -8px rgba(139,92,246,0.8); }
+  .btn.ghost{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    color: var(--text);
+    backdrop-filter: blur(8px);
+  }
+  .btn.ghost:hover{ transform: translateY(-2px); border-color: rgba(255,255,255,0.24); }
+
+  /* ---------------- HERO ART (SVG ilustración original) ---------------- */
+  .hero-art{ display:flex; justify-content:center; }
+  .hero-art svg{ width:100%; max-width:420px; height:auto; }
+  .float-slow{ animation: float 6s ease-in-out infinite; }
+  .float-slower{ animation: float 8s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce){ .float-slow, .float-slower{ animation:none; } }
+  @keyframes float{ 0%,100%{ transform: translateY(0px); } 50%{ transform: translateY(-10px); } }
+
+  /* ---------------- SECTION LABEL ---------------- */
+  .section-head{ padding: 8px 0 30px; }
+  .section-head .kicker{
+    font-family:'JetBrains Mono', monospace; font-size:12.5px;
+    color: var(--pink); letter-spacing:1px; text-transform:uppercase;
+    margin-bottom:8px; display:block;
+  }
+  .section-head h2{
+    font-family:'Sora', sans-serif; font-size: clamp(24px,3vw,32px);
+    margin:0; font-weight:700;
+  }
+
+  /* ---------------- PROJECT GRID ---------------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 22px;
+    padding-bottom: 70px;
+  }
+
+  .card{
+    position:relative;
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius);
+    padding: 2px;
+    backdrop-filter: blur(14px);
+    overflow:hidden;
+    transition: transform .18s ease, border-color .18s ease;
+    display:flex; flex-direction:column;
+  }
+  .card:hover{ transform: translateY(-5px); border-color: rgba(255,255,255,0.22); }
+  .card::before{
+    content:"";
+    position:absolute; inset:0 0 auto 0; height:4px;
+    background: linear-gradient(90deg, var(--card-color, var(--violet)), transparent 130%);
+  }
+  .card-inner{ padding: 22px 22px 24px; display:flex; flex-direction:column; flex:1; }
+
+  .card-icon{
+    width:42px; height:42px; border-radius:12px;
+    display:flex; align-items:center; justify-content:center;
+    background: color-mix(in srgb, var(--card-color, var(--violet)) 22%, transparent);
+    margin-bottom:16px;
+    font-family:'JetBrains Mono', monospace; font-weight:700; font-size:15px;
+    color: var(--card-color, var(--violet));
+    border: 1px solid color-mix(in srgb, var(--card-color, var(--violet)) 45%, transparent);
+  }
+
+  .card h3{ margin:0 0 8px; font-family:'Sora', sans-serif; font-size:18.5px; font-weight:700; }
+  .card p.desc{ color: var(--text-muted); font-size:14.5px; margin:0 0 18px; flex:1; }
+
+  .tags{ display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px; }
+  .tag{
+    font-family:'JetBrains Mono', monospace; font-size:11px;
+    padding:4px 10px; border-radius:99px;
+    background: rgba(255,255,255,0.06);
+    border:1px solid var(--panel-border);
+    color: var(--text-muted);
+  }
+
+  .links{ display:flex; gap:16px; font-size:13.5px; font-weight:600; }
+  .links a{ text-decoration:none; color: var(--card-color, var(--violet)); display:inline-flex; align-items:center; gap:5px; }
+  .links a:hover{ text-decoration:underline; }
+  .links a:focus-visible{ outline:2px solid var(--card-color, var(--violet)); outline-offset:3px; border-radius:4px; }
+
+  /* ---------------- FOOTER ---------------- */
+  footer{
+    border-top:1px solid var(--panel-border);
+    padding: 34px 0 60px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    font-size:13.5px; color: var(--text-muted);
+  }
+  footer a{ color: var(--teal); text-decoration:none; font-weight:600; }
+  footer a:hover{ text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav>
+    <div class="brand"><span class="brand-dot"></span> tu-nombre</div>
+    <div class="links">
+      <a href="#proyectos">Proyectos</a>
+      <a href="mailto:tu@email.com">Contacto</a>
+      <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div>
+      <span class="eyebrow"><span class="pulse"></span> Disponible para nuevos proyectos</span>
+      <h1>Construyo <span class="grad">software</span> que la gente realmente usa</h1>
+      <p class="lead">Desarrollador de software. Acá reúno los proyectos personales de los que estoy más orgulloso — código, productos y experimentos.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#proyectos">Ver proyectos ↓</a>
+        <a class="btn ghost" href="mailto:tu@email.com">Escribime</a>
+      </div>
+    </div>
+
+    <div class="hero-art" aria-hidden="true">
+      <svg viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#8B5CF6"/>
+            <stop offset="100%" stop-color="#FF6EC7"/>
+          </linearGradient>
+          <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#2DD4BF"/>
+            <stop offset="100%" stop-color="#8B5CF6"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <circle cx="210" cy="210" r="190" fill="url(#glow)"/>
+
+        <!-- líneas de conexión -->
+        <g stroke="#4C4570" stroke-width="1.6" opacity="0.7">
+          <line x1="210" y1="150" x2="120" y2="230"/>
+          <line x1="210" y1="150" x2="300" y2="230"/>
+          <line x1="210" y1="150" x2="210" y2="280"/>
+          <line x1="120" y1="230" x2="210" y2="280"/>
+          <line x1="300" y1="230" x2="210" y2="280"/>
+          <line x1="120" y1="230" x2="90" y2="320"/>
+          <line x1="300" y1="230" x2="330" y2="320"/>
+        </g>
+
+        <!-- panel central tipo "editor" -->
+        <g class="float-slow">
+          <rect x="150" y="110" width="120" height="82" rx="14" fill="#1C1245" stroke="url(#g1)" stroke-width="2"/>
+          <circle cx="167" cy="128" r="3.5" fill="#FF6EC7"/>
+          <circle cx="179" cy="128" r="3.5" fill="#FFB347"/>
+          <circle cx="191" cy="128" r="3.5" fill="#2DD4BF"/>
+          <line x1="163" y1="145" x2="220" y2="145" stroke="#8B5CF6" stroke-width="3" stroke-linecap="round"/>
+          <line x1="163" y1="157" x2="255" y2="157" stroke="#4C4570" stroke-width="3" stroke-linecap="round"/>
+          <line x1="163" y1="169" x2="235" y2="169" stroke="#4C4570" stroke-width="3" stroke-linecap="round"/>
+        </g>
+
+        <!-- nodo izquierdo -->
+        <g class="float-slower">
+          <circle cx="120" cy="230" r="26" fill="#1C1245" stroke="url(#g2)" stroke-width="2"/>
+          <text x="120" y="236" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" fill="#2DD4BF">{ }</text>
+        </g>
+
+        <!-- nodo derecho -->
+        <g class="float-slow">
+          <circle cx="300" cy="230" r="26" fill="#1C1245" stroke="url(#g1)" stroke-width="2"/>
+          <text x="300" y="237" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="16" fill="#FF6EC7">&lt;/&gt;</text>
+        </g>
+
+        <!-- nodo inferior -->
+        <g class="float-slower">
+          <circle cx="210" cy="280" r="30" fill="url(#g1)"/>
+          <path d="M198 280l8 8 16-16" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </g>
+
+        <!-- puntos satélite -->
+        <circle cx="90" cy="320" r="6" fill="#FFB347"/>
+        <circle cx="330" cy="320" r="6" fill="#2DD4BF"/>
+      </svg>
+    </div>
+  </section>
+
+  <div class="section-head" id="proyectos">
+    <span class="kicker">Portfolio</span>
+    <h2>Proyectos destacados</h2>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span>© <span id="year"></span> Tu Nombre — hecho con código y café</span>
+    <span><a href="mailto:tu@email.com">tu@email.com</a> · <a href="https://github.com/tu-usuario" target="_blank" rel="noopener">github.com/tu-usuario</a></span>
+  </footer>
+</div>
+
+<script>
+  // ============================================================
+  // EDITÁ TUS PROYECTOS ACÁ.
+  // icon: 1-2 caracteres/símbolo para el ícono de la tarjeta
+  // color: color de acento de la tarjeta (hex)
+  // repo / demo: opcionales, borrá la línea que no uses
+  // ============================================================
+  const projects = [
+    {
+      name: "Gestor de Tareas",
+      icon: "TM",
+      color: "#8B5CF6",
+      description: "App de escritorio para organizar tareas por proyecto, con recordatorios y etiquetas.",
+      tags: ["Python", "SQLite", "Tkinter"],
+      repo: "https://github.com/tu-usuario/task-manager",
+      demo: ""
+    },
+    {
+      name: "API de Clima",
+      icon: "☁",
+      color: "#2DD4BF",
+      description: "API REST que agrega datos de varios servicios de clima y los cachea para respuestas rápidas.",
+      tags: ["Node.js", "Express", "Redis"],
+      repo: "https://github.com/tu-usuario/weather-api",
+      demo: "https://weather-api-demo.example.com"
+    },
+    {
+      name: "Tienda Online",
+      icon: "$",
+      color: "#FF6EC7",
+      description: "E-commerce simple con carrito, checkout y panel de administración de productos.",
+      tags: ["React", "Stripe", "Tailwind"],
+      repo: "https://github.com/tu-usuario/tienda-web",
+      demo: "https://tienda-demo.example.com"
+    },
+    {
+      name: "Bot de Discord",
+      icon: "◆",
+      color: "#FFB347",
+      description: "Bot de moderación con comandos personalizados, logs de eventos y sistema de warns.",
+      tags: ["Go", "Discord API"],
+      repo: "https://github.com/tu-usuario/mod-bot",
+      demo: ""
+    }
+  ];
+
+  const grid = document.getElementById('grid');
+
+  projects.forEach(p => {
+    const card = document.createElement('article');
+    card.className = 'card';
+    card.style.setProperty('--card-color', p.color);
+
+    const linksHtml = [
+      p.repo ? `<a href="${p.repo}" target="_blank" rel="noopener">Código ↗</a>` : '',
+      p.demo ? `<a href="${p.demo}" target="_blank" rel="noopener">Demo ↗</a>` : ''
+    ].filter(Boolean).join('');
+
+    card.innerHTML = `
+      <div class="card-inner">
+        <div class="card-icon">${p.icon}</div>
+        <h3>${p.name}</h3>
+        <p class="desc">${p.description}</p>
+        <div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="links">${linksHtml}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
